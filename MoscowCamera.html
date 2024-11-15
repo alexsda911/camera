@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Player</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #player {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+</head>
+<body>
+  <div id="player"></div>
+  <script>
+    const player = new Clappr.Player({
+      source: "https://hls-spb03.timetechnology.ru:8080/2722/hls/fcdac098bed8c78a/live.m3u8",
+      parentId: "#player",
+      width: "100%",
+      height: "100%",
+      autoPlay: true, // Автозапуск
+      mute: true, // Без звука для совместимости с браузерами
+      mediacontrol: { seekbar: "#00FF00", buttons: "#FFFFFF" },
+      playback: {
+        playInline: true,
+        hlsjsConfig: {
+          enableWorker: true,
+        },
+      },
+    });
+  </script>
+</body>
+</html>
