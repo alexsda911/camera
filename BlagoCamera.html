@@ -19,11 +19,9 @@
     }
   </style>
 
-  <!-- Подключение Clappr -->
-  <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
-
-  <!-- Обязательно: HLS плагин для Clappr -->
-  <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@latest/dist/hlsjs-playback.min.js"></script>
+  <!-- ✅ СТАБИЛЬНЫЕ ВЕРСИИ Clappr и HLS-плагина -->
+  <script src="https://cdn.jsdelivr.net/npm/clappr@0.4.7/dist/clappr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@1.0.1/dist/hlsjs-playback.min.js"></script>
 </head>
 <body>
   <div id="player"></div>
@@ -36,7 +34,7 @@
       height: "100%",
       autoPlay: true,
       mute: true,
-      plugins: [HlsjsPlayback], // Включаем поддержку HLS
+      plugins: [HlsjsPlayback],
       playback: {
         playInline: true,
         hlsjsConfig: {
