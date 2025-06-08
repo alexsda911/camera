@@ -1,5 +1,6 @@
 export default async function handler(req, res) {
   const url = req.query.url;
+
   if (!url || !url.startsWith("http://hls3.bashtel.ru")) {
     return res.status(400).send("Invalid or missing URL");
   }
@@ -7,9 +8,23 @@ export default async function handler(req, res) {
   try {
     const response = await fetch(url);
     const contentType = response.headers.get("content-type") || "application/octet-stream";
-    res.setHeader("Content-Type", contentType);
-    const buffer = await response.arrayBuffer();
-    res.status(200).send(Buffer.from(buffer));
+    let text = await response.text();
+
+    if (contentType.includes("application/vnd.apple.mpegurl") || url.endsWith(".m3u8")) {
+      // Подменяем пути на абсолютные через этот же прокси
+      const base = url.substring(0, url.lastIndexOf("/") + 1);
+      text = text.replace(/^(?!#)(.+\.ts)$/gm, (line) => {
+        const segmentUrl = new URL(line, base).href;
+        const encoded = encodeURIComponent(segmentUrl);
+        return `${req.url.split("?")[0]}?url=${encoded}`;
+      });
+      res.setHeader("Content-Type", "application/vnd.apple.mpegurl");
+      res.status(200).send(text);
+    } else {
+      const buffer = await response.arrayBuffer();
+      res.setHeader("Content-Type", contentType);
+      res.status(200).send(Buffer.from(buffer));
+    }
   } catch (error) {
     res.status(500).send("Proxy error: " + error.message);
   }
