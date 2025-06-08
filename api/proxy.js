@@ -11,13 +11,17 @@ export default async function handler(req, res) {
     let text = await response.text();
 
     if (contentType.includes("application/vnd.apple.mpegurl") || url.endsWith(".m3u8")) {
-      // Подменяем пути на абсолютные через этот же прокси
+      // 👇 Абсолютный путь к текущему прокси
+      const proxyBase = `${req.headers['x-forwarded-proto'] || 'https'}://${req.headers.host}${req.url.split('?')[0]}`;
+
       const base = url.substring(0, url.lastIndexOf("/") + 1);
+
       text = text.replace(/^(?!#)(.+\.ts)$/gm, (line) => {
         const segmentUrl = new URL(line, base).href;
         const encoded = encodeURIComponent(segmentUrl);
-        return `${req.url.split("?")[0]}?url=${encoded}`;
+        return `${proxyBase}?url=${encoded}`;
       });
+
       res.setHeader("Content-Type", "application/vnd.apple.mpegurl");
       res.status(200).send(text);
     } else {
