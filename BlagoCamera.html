@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Live Player</title>
   <style>
     body {
@@ -18,25 +18,31 @@
       height: 100%;
     }
   </style>
+
+  <!-- Подключение Clappr -->
   <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+
+  <!-- Обязательно: HLS плагин для Clappr -->
+  <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@latest/dist/hlsjs-playback.min.js"></script>
 </head>
 <body>
   <div id="player"></div>
+
   <script>
     const player = new Clappr.Player({
       source: "https://camera-lyart-mu.vercel.app/api/proxy?url=http://hls3.bashtel.ru/hls/cam301.m3u8",
       parentId: "#player",
       width: "100%",
       height: "100%",
-      autoPlay: true, // Автозапуск
-      mute: true, // Без звука для совместимости с браузерами
-      mediacontrol: { seekbar: "#00FF00", buttons: "#FFFFFF" },
+      autoPlay: true,
+      mute: true,
+      plugins: [HlsjsPlayback], // Включаем поддержку HLS
       playback: {
         playInline: true,
         hlsjsConfig: {
-          enableWorker: true,
-        },
-      },
+          enableWorker: true
+        }
+      }
     });
   </script>
 </body>
