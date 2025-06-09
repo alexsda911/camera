@@ -19,10 +19,10 @@
     }
   </style>
 
-  <!-- ✅ Clappr (глобальный объект: Clappr) -->
+  <!-- Clappr core -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clappr/0.4.7/clappr.min.js"></script>
 
-  <!-- ✅ HLS плагин (регистрирует себя как HlsjsPlayback) -->
+  <!-- HLS plugin -->
   <script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@1.0.1/dist/hlsjs-playback.min.js"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
 
   <script>
     const player = new Clappr.Player({
-      source: "https://camera-lyart-mu.vercel.app/api/proxy?url=http://hls3.bashtel.ru/hls/cam301.m3u8",
+      source: "https://hls-https-proxy.onrender.com/proxy?url=http://hls3.bashtel.ru/hls/cam301.m3u8",
       parentId: "#player",
       width: "100%",
       height: "100%",
